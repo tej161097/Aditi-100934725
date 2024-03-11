@@ -7,6 +7,21 @@ steps:
   # Step 2: Push the Docker image to the Google Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/tejas-100925231/dockerfile:$SHORT_SHA']
+    
+    # Step 3: Deploy the Docker image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'dockerfile' 
+      - '--image'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/tejas-100925231/dockerfile:$SHORT_SHA'
+      - '--region'
+      - 'us-central1' 
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
  
 options:
   logging: GCS_ONLY
