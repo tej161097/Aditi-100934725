@@ -1,27 +1,28 @@
 steps:
   # Step 1: Build the Docker image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/tejas-100925231/dockerfile:$SHORT_SHA', 'Assignment2/']
- 
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/tejas-100925231/dockerfile:$COMMIT_SHA', 'Assignment2/']
  
   # Step 2: Push the Docker image to the Google Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/tejas-100925231/dockerfile:$SHORT_SHA']
-    
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/tejas-100925231/dockerfile:$COMMIT_SHA']
     # Step 3: Deploy the Docker image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args:
       - 'run'
       - 'deploy'
-      - 'dockerfile' 
+      - 'dockerfile'
       - '--image'
-      - 'us-central1-docker.pkg.dev/$PROJECT_ID/tejas-100925231/dockerfile:$SHORT_SHA'
+      - 'us-central1-docker.pkg.dev/$PROJECT_ID/tejas-100925231/dockerfile:$COMMIT_SHA'
       - '--region'
-      - 'us-central1' 
+      - 'us-central1'
       - '--platform'
       - 'managed'
       - '--allow-unauthenticated'
  
+images:
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/tejas-100925231/dockerfile:$COMMIT_SHA'
+ 
 options:
-  logging: GCS_ONLY
+    defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
