@@ -1,11 +1,12 @@
 steps:
   # Step 1: Build the Docker image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/tejas-100925231/dockerfile:$COMMIT_SHA', 'Assignment2/']
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/academic-emblem-411717/tejas-100925231/dockerfile:$COMMIT_SHA', 'Assignment2/']
  
   # Step 2: Push the Docker image to the Google Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/tejas-100925231/dockerfile:$COMMIT_SHA']
+    args: ['push', 'us-central1-docker.pkg.dev/academic-emblem-411717/tejas-100925231/dockerfile:$COMMIT_SHA']
+    
     # Step 3: Deploy the Docker image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
@@ -14,7 +15,7 @@ steps:
       - 'deploy'
       - 'dockerfile'
       - '--image'
-      - 'us-central1-docker.pkg.dev/$PROJECT_ID/tejas-100925231/dockerfile:$COMMIT_SHA'
+      - 'us-central1-docker.pkg.dev/academic-emblem-411717/tejas-100925231/dockerfile:$COMMIT_SHA'
       - '--region'
       - 'us-central1'
       - '--platform'
