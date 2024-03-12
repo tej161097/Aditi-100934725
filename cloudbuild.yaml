@@ -23,7 +23,7 @@ steps:
       - '--allow-unauthenticated'
  
 images:
-  - 'us-central1-docker.pkg.dev/$PROJECT_ID/tejas-100925231/dockerfile:$COMMIT_SHA'
+  - 'us-central1-docker.pkg.dev/academic-emblem-411717/tejas-100925231/dockerfile:$COMMIT_SHA'
  
 options:
     defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
