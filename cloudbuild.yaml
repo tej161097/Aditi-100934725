@@ -7,20 +7,16 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us-central1-docker.pkg.dev/academic-emblem-411717/tejas-100925231/dockerfile:$COMMIT_SHA']
     
-    # Step 3: Deploy the Docker image to Cloud Run
+   #step 3 Deploy Docker container to Cloud Run using Google Cloud SDK
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'gcloud'
+    entrypoint: 'bash'
     args:
-      - 'run'
-      - 'deploy'
-      - 'dockerfile'
-      - '--image'
-      - 'us-central1-docker.pkg.dev/academic-emblem-411717/tejas-100925231/dockerfile:$COMMIT_SHA'
-      - '--region'
-      - 'us-central1'
-      - '--platform'
-      - 'managed'
-      - '--allow-unauthenticated'
+      - '-c'
+      - |
+        gcloud run deploy dockerfile \
+          --image us-central1-docker.pkg.dev/academic-emblem-411717/tejas-100925231/dockerfile:$COMMIT_SHA \
+          --platform managed \
+          --region us-central1
  
 images:
   - 'us-central1-docker.pkg.dev/academic-emblem-411717/tejas-100925231/dockerfile:$COMMIT_SHA'
